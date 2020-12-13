@@ -61,7 +61,7 @@ public class StuServiceImpl implements StuService {
     @Override
     public void saveChildren() {
         saveChild1();
-        int i = 1 / 0;
+//        int i = 1 / 0;
         saveChild2();
     }
 

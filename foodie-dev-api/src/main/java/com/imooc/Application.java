@@ -11,7 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @date 2020/11/29
  */
 //@EnableTransactionManagement
-@MapperScan(basePackages = "com.imooc.mapper")
+@MapperScan(basePackages = {"com.imooc.mapper", "org.n3r.idworker"})
 @SpringBootApplication
 public class Application {
 
