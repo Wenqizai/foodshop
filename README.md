@@ -12,3 +12,23 @@
 注册 -> 提交注册信息 -> 后端校验信息 -> 设置默认信息并插库 -> 返回user对象, 用于页面显示
 ```
 
+
+
+## 2. 整合Swagger 2.0
+
+引入全新的Swagger界面（基于Bootstrap），原有UI界面同时保留。
+
+```xml
+<dependency>
+    <groupId>com.github.xiaoymin</groupId>
+    <artifactId>swagger-bootstrap-ui</artifactId>
+    <version>1.6</version>
+</dependency>
+```
+
+```java
+// Swagger官方路径
+http://localhost:8088/swagger-ui.html
+// 新路径
+http://localhost:8088/doc.html
+```

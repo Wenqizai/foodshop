@@ -1,14 +1,12 @@
 package com.imooc.controller;
 
-import com.imooc.pojo.bo.UserBo;
-import com.imooc.service.StuService;
+import com.imooc.pojo.bo.UserBO;
 import com.imooc.service.UserService;
 import com.imooc.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @Api(value = "注册登录", tags = "用于注册和登录的相关接口")
@@ -37,7 +35,7 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/regist")
-    public IMOOCJSONResult regist(@RequestBody UserBo userBo) {
+    public IMOOCJSONResult regist(@RequestBody UserBO userBo) {
         String username = userBo.getUsername();
         String password = userBo.getPassword();
         String confirmPassword = userBo.getConfirmPassword();

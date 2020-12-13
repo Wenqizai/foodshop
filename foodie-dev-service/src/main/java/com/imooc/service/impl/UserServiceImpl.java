@@ -1,16 +1,12 @@
 package com.imooc.service.impl;
 
 import com.imooc.enums.SexEnum;
-import com.imooc.mapper.StuMapper;
 import com.imooc.mapper.UsersMapper;
-import com.imooc.pojo.Stu;
 import com.imooc.pojo.Users;
-import com.imooc.pojo.bo.UserBo;
-import com.imooc.service.StuService;
+import com.imooc.pojo.bo.UserBO;
 import com.imooc.service.UserService;
 import com.imooc.utils.DateUtil;
 import com.imooc.utils.MD5Utils;
-import org.n3r.idworker.IdWorker;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public Users createUsers(UserBo userBo) {
+    public Users createUsers(UserBO userBo) {
         Users user = new Users();
         // 借助id生成器, 生成全局id
         String userId = sid.nextShort();
