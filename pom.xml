@@ -112,7 +112,7 @@
         </dependency>
 
         <!-- swagger2 配置 -->
-        <!--<dependency>
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.4.0</version>
@@ -126,7 +126,7 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>1.6</version>
-        </dependency>-->
+        </dependency>
 
         <!--引入日志依赖 抽象层 与 实现层-->
        <!-- <dependency>

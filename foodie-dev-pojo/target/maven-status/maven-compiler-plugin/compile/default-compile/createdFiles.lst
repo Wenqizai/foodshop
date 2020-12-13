@@ -1,5 +1,6 @@
 com\imooc\pojo\OrderStatus.class
 com\imooc\pojo\Carousel.class
+com\imooc\pojo\bo\UserBo.class
 com\imooc\pojo\Orders.class
 com\imooc\pojo\ItemsSpec.class
 com\imooc\pojo\ItemsComments.class

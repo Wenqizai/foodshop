@@ -3,7 +3,6 @@ package com.imooc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
@@ -11,7 +10,8 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @date 2020/11/29
  */
 //@EnableTransactionManagement
-@MapperScan(basePackages = {"com.imooc.mapper", "org.n3r.idworker"})
+@ComponentScan({"com.imooc", "org.n3r.idworker"})
+@MapperScan(basePackages = {"com.imooc.mapper"})
 @SpringBootApplication
 public class Application {
 

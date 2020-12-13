@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users createUsers(UserBo userBo) {
         Users user = new Users();
-        // 借助id生成器
+        // 借助id生成器, 生成全局id
         String userId = sid.nextShort();
         user.setId(userId);
         user.setUsername(userBo.getUsername());
@@ -68,10 +68,7 @@ public class UserServiceImpl implements UserService {
         // 注册时间
         user.setCreatedTime(new Date());
         user.setUpdatedTime(user.getCreatedTime());
-        if(userBo.getPassword().equals(userBo.getConfirmPassword())) {
-
-        }
-        usersMapper.insert(user );
-        return null;
+        usersMapper.insert(user);
+        return user;
     }
 }
