@@ -12,7 +12,23 @@
 注册 -> 提交注册信息 -> 后端校验信息 -> 设置默认信息并插库 -> 返回user对象, 用于页面显示
 ```
 
+查询到信息进行一些脱敏之后（设置为null），将信息设置到cookie中，过程使用cookie进行信息交互。
 
+```java
+CookieUtils.setCookie(request, response, "user",
+        JsonUtils.objectToJson(userResult), true);
+```
+
+退出登录时:
+
+1. 需把cookie删除
+2. 清空购物车信息
+3. 分布式会话中, 清除用户数据。
+
+```java
+// 清除用户的相关信息的cookie
+CookieUtils.deleteCookie(request, response, "user");
+```
 
 ## 2. 整合Swagger 2.0
 
@@ -32,3 +48,19 @@ http://localhost:8088/swagger-ui.html
 // 新路径
 http://localhost:8088/doc.html
 ```
+
+## 3. 日志管理
+
+1. 整合slf4j+log4j，添加log4j.properties。
+2. 借助Spring AOP用来记录每个service的执行时间。
+   1. 执行时间>3s，输出日志级别为ERRO。
+   2. 执行时间>2s，输出日志级别为WARN。
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+```
+
+3. 

@@ -1,0 +1,72 @@
+
+Q
+java:S1444"6Make this "public static DATETIME_PATTERN" field final(Äï©ıùÿÿÿÿ
+k	java:S117I"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åÒúŞøÿÿÿÿ
+f	java:S117<"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÈÁßÒ
+l	java:S117Í"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ãéˆ†ıÿÿÿÿ
+]
+java:S1126û"AReplace this if-then-else statement by a single return statement.(¨–ş³úÿÿÿÿ
+g	java:S117”"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ö“„
+l	java:S117“"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€çˆÂüÿÿÿÿ
+f	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(àÛ”´
+l	java:S117ë"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éË­ùÿÿÿÿ
+M
+java:S1153²"1Directly append the argument of String.valueOf().(Ä©€Úûÿÿÿÿ
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İÄ¶¯
+M
+java:S1153¹"1Directly append the argument of String.valueOf().(®îôóøÿÿÿÿ
+k	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Ÿéÿÿÿÿÿ
+v
+java:S3008"[Rename this field "DATETIME_PATTERN" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Äï©ıùÿÿÿÿ
+J
+java:S1172î".Remove this unused method parameter "lenient".(õçôùÿÿÿÿ
+w
+java:S1104"\Make DATETIME_PATTERN a static final constant or non-public and provide accessors if needed.(Äï©ıùÿÿÿÿ
+l	java:S117ö"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éË­ùÿÿÿÿ
+Z
+java:S1128"DRemove this unused import 'org.apache.commons.lang3.time.DateUtils'.(½ç
+f	java:S117L"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠıÚ
+U
+java:S3252">Use static access with "java.util.Calendar" for "getInstance".(Ó·¬¾
+R	java:S125ˆ"<This block of commented-out lines of code should be removed.(ñ™÷ 
+l	java:S117Ù"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Şœ‚üÿÿÿÿ
+M
+java:S1153·"1Directly append the argument of String.valueOf().(î®èúøÿÿÿÿ
+f	java:S117’"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊöĞ
+l	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©»Ù¡øÿÿÿÿ
+M
+java:S1153´"1Directly append the argument of String.valueOf().(¯½°êûÿÿÿÿ
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ıšê©
+r
+java:S3008"WRename this field "DATE_PATTERN" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò—ÙÖüÿÿÿÿ
+k	java:S117-"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”Ä–Ñûÿÿÿÿ
+k	java:S117J"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔœÃÜøÿÿÿÿ
+g	java:S117•"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïıòç
+s
+java:S1104"XMake DATE_PATTERN a static final constant or non-public and provide accessors if needed.(Ò—ÙÖüÿÿÿÿ
+`
+java:S1124$"EReorder the modifiers to comply with the Java Language Specification.(ûö†şÿÿÿÿ
+z
+java:S1149%"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(˜İâœÿÿÿÿÿ
+k	java:S117G"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñì‰Äøÿÿÿÿ
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(û ã 
+f	java:S117D"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©‹ß®
+O	java:S106‹"9Replace this use of System.out or System.err by a logger.(Ò‰»
+M
+java:S1444"2Make this "public static DATE_PATTERN" field final(Ò—ÙÖüÿÿÿÿ
+U
+java:S3252Ï">Use static access with "java.util.Calendar" for "getInstance".(Ó·¬¾
+U
+java:S3252">Use static access with "java.util.Calendar" for "getInstance".(Ó·¬¾
+m
+java:S3008"WRename this field "LENIENT_DATE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³õ¦Û
+f	java:S117F"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øø€ 
+g	java:S117‘"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™ïÅî
+‡
+java:S1130Í"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(•´Ù
+U
+java:S3252ı">Use static access with "java.util.Calendar" for "getInstance".(Ó·¬¾
+U
+java:S3252¶">Use static access with "java.util.Calendar" for "getInstance".(Ó·¬¾
+k	java:S117E"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊáË•şÿÿÿÿ
+l	java:S117ä"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éË­ùÿÿÿÿ
