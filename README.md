@@ -1,4 +1,4 @@
-## 1. 登录与注册
+1. 登录与注册
 
 ### 1. 1 常见的用户注册登录流程
 
@@ -63,4 +63,54 @@ http://localhost:8088/doc.html
 </dependency>
 ```
 
-3. 
+## 4. 首页显示
+
+### 4.1 轮播图
+
+​	按顺序展示, 包含图片背景色。
+
+### 4.2 商品分类
+
+1.  第一次刷新主页查询大分类, 渲染展示到首页
+2.  如果鼠标上移到大分类, 则加载其子分类的内容, 如果已经存在子分类, 则不需要加载(懒加载)
+
+实现：自定义VO类, 利用MyBatis帮忙封装分类。
+
+```java
+@Data
+public class CategoryVO {
+    private Integer id;
+    private String name;
+    private String type;
+    private Integer fatherId;
+    /**
+     * 三级分类VO List
+     */
+    private List<SubCategoryVO> subCatList;
+}
+```
+
+```java
+@Data
+public class SubCategoryVO {
+    private Integer subId;
+    private String subName;
+    private String subType;
+    private Integer subFatherId;
+}
+```
+
+```
+<resultMap id="myCategoryVO" type="com.imooc.pojo.vo.CategoryVO">
+  <id column="id" property="id"/>
+  <result column="name" property="name"/>
+  <result column="type" property="type"/>
+  <result column="fatherId" property="fatherId"/>
+  <collection property="subCatList" ofType="com.imooc.pojo.vo.SubCategoryVO">
+    <id column="subId" property="subId"/>
+    <result column="subName" property="subName"/>
+    <result column="subType" property="subType"/>
+    <result column="subFatherId" property="subFatherId"/>
+  </collection>
+</resultMap>
+```
