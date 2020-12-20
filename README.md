@@ -123,3 +123,11 @@ public class SubCategoryVO {
 包含四部分封装到==ItemInfoVO==：商品信息item，商品图片itemImgList，商品规格itemSpecList，商品参数itemParams。
 
 ### 5.2 商品评价
+
+1. 分页展示
+2. 昵称脱敏，借助工具类DesensitizationUtil（实现：利用StringBuilder拼接字符串）。
+   1. 昵称位数 <= 2：保留最后一位，前面脱敏
+   2. 昵称位数 = 3：前后各保留最后一位，中间脱敏
+   3. 昵称位数 < 8：前后各保留最后一位，中间脱敏
+   4. 昵称位数 >= 8：中间脱敏6位
+

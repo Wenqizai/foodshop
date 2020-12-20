@@ -1,21 +1,24 @@
 package com.imooc.service.impl;
 
-import com.imooc.mapper.ItemsImgMapper;
-import com.imooc.mapper.ItemsMapper;
-import com.imooc.mapper.ItemsParamMapper;
-import com.imooc.mapper.ItemsSpecMapper;
-import com.imooc.pojo.Items;
-import com.imooc.pojo.ItemsImg;
-import com.imooc.pojo.ItemsParam;
-import com.imooc.pojo.ItemsSpec;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.imooc.enums.CommentLevel;
+import com.imooc.mapper.*;
+import com.imooc.pojo.*;
+import com.imooc.pojo.vo.CommentLevelCountsVO;
+import com.imooc.pojo.vo.ItemCommentVO;
 import com.imooc.service.ItemService;
+import com.imooc.utils.DesensitizationUtil;
+import com.imooc.utils.PagedGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品Service
@@ -34,6 +37,10 @@ public class ItemServiceImpl implements ItemService {
     ItemsSpecMapper itemsSpecMapper;
     @Autowired
     ItemsParamMapper itemsParamMapper;
+    @Autowired
+    ItemsCommentsMapper itemsCommentsMapper;
+    @Autowired
+    ItemsMapperCustom itemsMapperCustom;
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
@@ -63,5 +70,63 @@ public class ItemServiceImpl implements ItemService {
         Example example = new Example(ItemsParam.class);
         example.createCriteria().andEqualTo("itemId", itemId);
         return itemsParamMapper.selectOneByExample(example);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public CommentLevelCountsVO queryCommmentCounts(String itemId) {
+        Integer goodCounts = getCommentCounts(itemId, CommentLevel.GOOD.type);
+        Integer normalCounts = getCommentCounts(itemId, CommentLevel.NORMAL.type);
+        Integer badCounts = getCommentCounts(itemId, CommentLevel.BAD.type);
+        Integer totalCounts = goodCounts + normalCounts + badCounts;
+        CommentLevelCountsVO countsVO = new CommentLevelCountsVO();
+        countsVO.setGoodCounts(goodCounts);
+        countsVO.setNormalCounts(normalCounts);
+        countsVO.setBadCounts(badCounts);
+        countsVO.setTotalCounts(totalCounts);
+        return countsVO;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("itemId", itemId);
+        map.put("level", level);
+        // 分页
+        PageHelper.startPage(page, pageSize);
+        List<ItemCommentVO> commentVOList = itemsMapperCustom.queryItemComments(map);
+        // 昵称脱敏
+        commentVOList.stream().forEach(e ->
+                e.setNickname(DesensitizationUtil.commonDisplay(e.getNickname()))
+        );
+        return setterPagedGrid(commentVOList, page);
+    }
+
+    /**
+     * 设置分页
+     *
+     * @param list
+     * @param page
+     * @return
+     */
+    private PagedGridResult setterPagedGrid(List<?> list, Integer page) {
+        PageInfo<?> pageList = new PageInfo<>(list);
+        PagedGridResult grid = new PagedGridResult();
+        grid.setPage(page);
+        grid.setRows(list);
+        grid.setTotal(pageList.getPages());
+        grid.setRecords(pageList.getTotal());
+        return grid;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    Integer getCommentCounts(String itemId, Integer level) {
+        ItemsComments condition = new ItemsComments();
+        condition.setItemId(itemId);
+        if (level != null) {
+            condition.setCommentLevel(level);
+        }
+        return itemsCommentsMapper.selectCount(condition);
     }
 }

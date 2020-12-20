@@ -4,9 +4,11 @@ import com.imooc.pojo.Items;
 import com.imooc.pojo.ItemsImg;
 import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
+import com.imooc.pojo.vo.CommentLevelCountsVO;
 import com.imooc.pojo.vo.ItemInfoVO;
 import com.imooc.service.ItemService;
 import com.imooc.utils.IMOOCJSONResult;
+import com.imooc.utils.PagedGridResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,17 +16,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Api(value = "商品接口", tags = "商品信息展示的相关接口")
 @RestController
 @RequestMapping("items")
-public class ItemsController {
+public class ItemsController extends BaseController {
 
     final static Logger logger = LoggerFactory.getLogger(ItemsController.class);
 
@@ -51,5 +50,39 @@ public class ItemsController {
         return IMOOCJSONResult.ok(itemInfoVO);
     }
 
+    @ApiOperation(value = "查询商品评价等级", notes = "查询商品评价等级", httpMethod = "GET")
+    @GetMapping("/commentLevel")
+    public IMOOCJSONResult commentLevel(
+            @ApiParam(name = "itemId", value = "商品id", required = true)
+            @RequestParam("itemId") String itemId) {
+        if (StringUtils.isBlank(itemId)) {
+            return IMOOCJSONResult.errorMsg(null);
+        }
+        CommentLevelCountsVO countsVO = itemService.queryCommmentCounts(itemId);
+        return IMOOCJSONResult.ok(countsVO);
+    }
 
+    @ApiOperation(value = "查询商品评价", notes = "查询商品评价", httpMethod = "GET")
+    @GetMapping("/comments")
+    public IMOOCJSONResult commentLevel(
+            @ApiParam(name = "itemId", value = "商品id", required = true)
+            @RequestParam(value = "itemId", required = true) String itemId,
+            @ApiParam(name = "level", value = "评价等级")
+            @RequestParam(value = "level", required = false) Integer level,
+            @ApiParam(name = "page", value = "查询下一页的第几页")
+            @RequestParam(value = "page", required = false) Integer page,
+            @ApiParam(name = "pageSize", value = "分页的每页显示的条数")
+            @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        if (StringUtils.isBlank(itemId)) {
+            return IMOOCJSONResult.errorMsg(null);
+        }
+        if (page == null) {
+            page = 1;
+        }
+        if (pageSize == null) {
+            page = COMMENT_PAGE_SIZE;
+        }
+        PagedGridResult grid = itemService.queryPagedComments(itemId, level, page, pageSize);
+        return IMOOCJSONResult.ok(grid);
+    }
 }
