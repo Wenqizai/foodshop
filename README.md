@@ -115,3 +115,11 @@ public class SubCategoryVO {
   </collection>
 </resultMap>
 ```
+
+## 5. 商品详情
+
+### 5.1 商品信息展示
+
+包含四部分封装到==ItemInfoVO==：商品信息item，商品图片itemImgList，商品规格itemSpecList，商品参数itemParams。
+
+### 5.2 商品评价
