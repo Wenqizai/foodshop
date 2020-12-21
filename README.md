@@ -42,19 +42,15 @@ CookieUtils.deleteCookie(request, response, "user");
 </dependency>
 ```
 
-```java
-// Swagger官方路径
-http://localhost:8088/swagger-ui.html
-// 新路径
-http://localhost:8088/doc.html
-```
+参看 ：[Swagger官方访问路径](http://localhost:8088/swagger-ui.html)  [全新界面访问路径](http://localhost:8088/doc.html)
 
 ## 3. 日志管理
 
-1. 整合slf4j+log4j，添加log4j.properties。
-2. 借助Spring AOP用来记录每个service的执行时间。
-   1. 执行时间>3s，输出日志级别为ERRO。
-   2. 执行时间>2s，输出日志级别为WARN。
+1. 整合`slf4j + log4j`，添加`log4j.properties`。
+2. 借助`Spring AOP`用来记录每个service的执行时间。
+   - 执行时间>3s，输出日志级别为ERRO。
+
+   - 执行时间>2s，输出日志级别为WARN。
 
 ```xml
 <dependency>
@@ -75,7 +71,7 @@ http://localhost:8088/doc.html
 2.  如果鼠标上移到大分类, 则加载其子分类的内容, 如果已经存在子分类, 则不需要加载(懒加载)
 3.  商品推荐展示, 默认显示最新6个商品(懒加载)
 
-实现：自定义VO类, 利用MyBatis帮忙封装分类。
+实现：自定义`VO`类, 利用`MyBatis`帮忙封装分类。
 
 ```java
 @Data
@@ -101,7 +97,7 @@ public class SubCategoryVO {
 }
 ```
 
-```
+```xml
 <resultMap id="myCategoryVO" type="com.imooc.pojo.vo.CategoryVO">
   <id column="id" property="id"/>
   <result column="name" property="name"/>
@@ -120,14 +116,24 @@ public class SubCategoryVO {
 
 ### 5.1 商品信息展示
 
-包含四部分封装到==ItemInfoVO==：商品信息item，商品图片itemImgList，商品规格itemSpecList，商品参数itemParams。
+包含四部分封装到`ItemInfoVO`：商品信息`item`，商品图片`itemImgList`，商品规格`itemSpecList`，商品参数`itemParams`。
 
 ### 5.2 商品评价
 
 1. 分页展示
-2. 昵称脱敏，借助工具类DesensitizationUtil（实现：利用StringBuilder拼接字符串）。
-   1. 昵称位数 <= 2：保留最后一位，前面脱敏
-   2. 昵称位数 = 3：前后各保留最后一位，中间脱敏
-   3. 昵称位数 < 8：前后各保留最后一位，中间脱敏
-   4. 昵称位数 >= 8：中间脱敏6位
+2. 昵称脱敏，借助工具类`DesensitizationUtil`（实现：利用`StringBuilder`拼接字符串）。
+   - 昵称位数 <= 2：保留最后一位，前面脱敏
 
+   - 昵称位数 = 3：前后各保留最后一位，中间脱敏
+
+   - 昵称位数 < 8：前后各保留最后一位，中间脱敏
+
+   - 昵称位数 >= 8：中间脱敏6位
+
+### 5.3 商品搜索
+
+1. 商品名称模糊查询，并按商品名称或销量或价格进行排序。
+
+   `i.item_name like '%${paramsMap.keywords}%'`
+
+2. 根据三级分类id查询
