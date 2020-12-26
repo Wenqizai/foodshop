@@ -1,2 +1,3 @@
+com\imooc\utils\MobileEmailUtils.class
 com\imooc\utils\PagedGridResult.class
 com\imooc\utils\DesensitizationUtil.class
