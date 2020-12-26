@@ -137,3 +137,14 @@ public class SubCategoryVO {
    `i.item_name like '%${paramsMap.keywords}%'`
 
 2. 根据三级分类id查询
+
+## 6. 购物车
+
+1. 数据存储
+   - 未登录状态 : 使用cookie
+   - 登录后状态 : 使用Redis
+2. 刷新购物车
+   - 主要考虑购物车中的数据(主要是商品的价格)可能已经发生变化，需要更新。
+3. 删除购物车数据
+   - 删除Cookie
+   - 删除Redis

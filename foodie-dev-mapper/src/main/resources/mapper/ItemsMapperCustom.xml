@@ -58,17 +58,17 @@
   -->
   <select id="searchItemsByThirdCat" parameterType="Map" resultType="com.imooc.pojo.vo.SearchItemsVO">
     SELECT
-    i.id AS itemId,
-    i.item_name AS itemName,
-    i.sell_counts AS sellCounts,
-    ii.url AS imgUrl,
-    tempSpec.price_discount AS price
+      i.id AS itemId,
+      i.item_name AS itemName,
+      i.sell_counts AS sellCounts,
+      ii.url AS imgUrl,
+      tempSpec.price_discount AS price
     FROM
-    items i
-    LEFT JOIN items_img ii ON i.id = ii.item_id
-    LEFT JOIN
-    ( SELECT item_id, Min( price_discount ) AS price_discount FROM items_spec GROUP BY item_id ) tempSpec
-    ON i.id = tempSpec.item_id
+      items i
+      LEFT JOIN items_img ii ON i.id = ii.item_id
+      LEFT JOIN
+        ( SELECT item_id, Min( price_discount ) AS price_discount FROM items_spec GROUP BY item_id ) tempSpec
+      ON i.id = tempSpec.item_id
     WHERE
         ii.is_main = 1
         and
@@ -90,4 +90,25 @@
     </choose>
   </select>
 
+  <select id="searchItemsBySpecIds" parameterType="List" resultType="com.imooc.pojo.vo.ShopcartVO">
+    SELECT
+        t_items.id AS itemId,
+        t_items.item_name AS itemName,
+        t_items_img.url AS itemImgUrl,
+        t_items_spec.id AS specId,
+        t_items_spec.`name` AS specName,
+        t_items_spec.price_discount AS priceDiscount,
+        t_items_spec.price_normal AS priceNormal
+    FROM
+        items_spec t_items_spec
+        LEFT JOIN items t_items ON t_items.id = t_items_spec.item_id
+        LEFT JOIN items_img t_items_img ON t_items_img.item_id = t_items_spec.item_id
+    WHERE
+        t_items_img.is_main = 1
+    AND
+        t_items_spec.id IN
+        <foreach collection="paramsList" index="index" item="specId" open="(" separator="," close=")">
+            #{specId}
+        </foreach>
+  </select>
 </mapper>
