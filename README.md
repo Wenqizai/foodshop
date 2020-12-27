@@ -1,10 +1,10 @@
-1. 登录与注册
+## 1. 登录与注册
 
-### 1. 1 常见的用户注册登录流程
+> 常见的用户注册登录流程
 
-![](C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\注册登录流程.png)
+<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\注册登录流程.png" style="zoom:50%;" />
 
-### 1.2 本项目采用方案
+>  本项目采用方案
 
 本次项目采用注册方案为两次校验密码的方式. 大致流程如下: 
 
@@ -162,3 +162,25 @@ public class SubCategoryVO {
 5. 设置默认收货地址
    1. 查找默认地址设置为不默认
    2. 根据地址id修改为默认地址
+
+> 订单
+
+1. 订单处理流程图
+
+![](C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\订单流程.png)
+
+2. 创建订单
+   - 设置订单信息 ->  查询商品信息 -> 设置商品信息 -> 获取购物车中的商品数量 -> 计算商品价格和支付价格 -> 订单保存到数据库 -> 库存减除 -> 设置订单状态
+   - ==注意 :== 减库存时商品超卖问题
+
+```sql
+update items_spec set stock = stock - #{pendingCounts} where id = #{specId} and stock >= #{pendingCounts}
+```
+
+```markdown
+// 解决商品超卖问题的思路
+1. synchronized 不推荐使用, 集群下无用, 性能低下
+2. 锁数据库 : 不推荐, 导致数据库性能低下
+3. 单体应用 : sql语句的乐观锁
+4. 分布式应用 : 分布式锁 zookeeper redis
+```

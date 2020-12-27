@@ -21,7 +21,7 @@ public interface ItemService {
     /**
      * 根据商品id查询详情
      *
-     * @param id
+     * @param itemId
      * @return
      */
     public Items queryItemById(String itemId);
@@ -90,4 +90,25 @@ public interface ItemService {
      * @return
      */
     public List<ShopcartVO> searchItemsBySpecIds(String specIds);
+
+    /**
+     * 根据商品规格id获取规格对象的具体信息
+     * @param specId
+     * @return
+     */
+    public ItemsSpec queryItemSpecById(String specId);
+
+    /**
+     * 根据商品id获得商品图片的主图url
+     * @param itemId
+     * @return
+     */
+    public String queryItemMainImgById(String itemId);
+
+    /**
+     * 减小库存
+     * @param specId
+     * @param buyCounts
+     */
+    public void decreaseItemSpecStock(String specId, int buyCounts);
 }
