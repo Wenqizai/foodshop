@@ -184,3 +184,8 @@ update items_spec set stock = stock - #{pendingCounts} where id = #{specId} and 
 3. 单体应用 : sql语句的乐观锁
 4. 分布式应用 : 分布式锁 zookeeper redis
 ```
+
+## 8. 支付
+
+本项目因没有注册商户平台，故不具备使用微信支付的资质。因此使用第三方支付中心来完成支付流程。
+

@@ -6,6 +6,9 @@
     <list size="0" />
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/foodie-payment" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
