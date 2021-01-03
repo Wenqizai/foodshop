@@ -18,7 +18,12 @@ public class PayWebMvcConfig implements WebMvcConfigurer {
         return builder.build();
     }
 
-
+	@Bean
+	public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
+		RedisTemplate redisTemplate = new RedisTemplate();
+		redisTemplate.setConnectionFactory(factory);
+		return redisTemplate;
+	}
 
 	@Bean
 	public PayCenterInterceptor payCenterInterceptor() {

@@ -2,12 +2,11 @@ package com.imooc.controller;
 
 import com.imooc.enums.OrderStatusEnum;
 import com.imooc.enums.PayMethod;
+import com.imooc.pojo.OrderStatus;
 import com.imooc.pojo.bo.SubmitBO;
 import com.imooc.pojo.vo.MerchantOrdersVO;
 import com.imooc.pojo.vo.OrderVO;
-import com.imooc.service.AddressService;
 import com.imooc.service.OrderService;
-import com.imooc.utils.CookieUtils;
 import com.imooc.utils.IMOOCJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +37,8 @@ public class OrderController extends BaseController {
 
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("/create")
-    public IMOOCJSONResult create(@RequestBody SubmitBO submitBO, HttpServletRequest request, HttpServletResponse response) {
+    public IMOOCJSONResult create(@RequestBody SubmitBO submitBO, HttpServletRequest request,
+                                  HttpServletResponse response) {
         if (submitBO.getPayMethod() != PayMethod.WEIXIN.type
                 && submitBO.getPayMethod() != PayMethod.ALIPAY.type) {
             return IMOOCJSONResult.errorMsg("支付方式不支持");
@@ -85,5 +85,11 @@ public class OrderController extends BaseController {
     public Integer notifyMerChantOrderPaid(String merchantOrderId) {
         orderService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
         return HttpStatus.OK.value();
+    }
+
+    @PostMapping("/getPaidOrderInfo")
+    public IMOOCJSONResult getPaidOrderInfo(String orderId) {
+        OrderStatus orderStatus = orderService.queryOrderStatusInfo(orderId);
+        return IMOOCJSONResult.ok(orderStatus);
     }
 }

@@ -185,7 +185,104 @@ update items_spec set stock = stock - #{pendingCounts} where id = #{specId} and 
 4. 分布式应用 : 分布式锁 zookeeper redis
 ```
 
-## 8. 支付
+## 8. 微信支付
 
 本项目因没有注册商户平台，故不具备使用微信支付的资质。因此使用第三方支付中心来完成支付流程。
 
+> 总流程时序图
+
+![](C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\微信支付.png)
+
+### 8.1 创建商单
+
+<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\创建订单-时序图.png" style="zoom:50%;" />
+
+### 8.2 获取二维码
+
+> 统一下单(发送到微信支付中心)
+
+1. 时序图
+
+<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\获取二维码-时序图.png" style="zoom: 33%;" />
+
+2. 请求url地址
+
+https://api.mch.weixin.qq.com/pay/unifiedorder
+
+3. 请求参数(xml)
+
+|      参数名      |       参数       | 是否必须 |    类型     |
+| :--------------: | :--------------: | :------: | :---------: |
+|    商户订单号    |   out_trade_no   |    是    | String(32)  |
+|     商品描述     |       body       |    是    | String(128) |
+|     标价金额     |    total_fee     |    是    |     Int     |
+|    公众账号ID    |      appid       |    是    | String(32)  |
+| 商户号(微信分配) |      mch_id      |    是    | String(32)  |
+|     通知地址     |    notify_url    |    是    | String(256) |
+|    随机字符串    |    nonce_str     |    是    | String(32)  |
+|     交易类型     |    trade_type    |    是    | String(16)  |
+|      终端IP      | spbill_create_ip |    是    | String(64)  |
+|       签名       |       sign       |    是    | String(32)  |
+
+4. 返回结果(xml)
+
+|      参数       |       参数名       |
+| :-------------: | :----------------: |
+| ==return_code== |     返回状态码     |
+|   return_msg    |      返回信息      |
+|      appid      |     公众账号ID     |
+|     mch_id      |       商户号       |
+|   device_info   |       设备号       |
+|    nonce_str    |     随机字符串     |
+|      sign       |        签名        |
+|   result_code   |      业务结果      |
+|    err_code     |      错误代码      |
+|  err_code_des   |    错误代码描述    |
+|   trade_type    |      交易类型      |
+|    prepay_id    | 预支付交易会话标识 |
+|  ==code_url==   |     二维码链接     |
+
+### 8.3 扫码支付
+
+用户扫码确认支付，整个流程为微信客户端与微信支付中心的交互。
+
+### 8.4 支付结果通知
+
+用户支付成功之后，微信支付中心会根据==notify_url==异步通知商家支付结果。
+
+通知频率为`15s/15s/30s/3m/10m/20m/30m/30m/30m/60m/3h/3h/3h/6h/6h`
+
+> 返回结果
+
+|             名称             |      参数       |    类型    |
+| :--------------------------: | :-------------: | :--------: |
+|        ==返回状态码==        | ==return_code== | ==String== |
+|          公众账号ID          |      appid      |   String   |
+|            商户号            |     mch_id      |   String   |
+|          随机字符串          |    nonce_str    |   String   |
+|             签名             |      sign       |   String   |
+|           业务结果           |   result_code   |   String   |
+|           用户标识           |     openid      |   String   |
+|           交易类型           |   trade_type    |   String   |
+|           付款银行           |    bank_type    |   String   |
+|            总金额            |    total_fee    |    int     |
+|         现金支付金额         |    cash_fee     |    int     |
+|        微信支付订单号        | transaction_id  |   String   |
+|          商户订单号          |  out_trade_no   |   String   |
+|         支付完成时间         |    time_end     |   String   |
+|           返回信息           |   return_msg    |   String   |
+|            设备号            |   device_info   |   String   |
+|           错误代码           |    err_code     |   String   |
+|         错误代码描述         |  err_code_des   |   String   |
+|       是否关注公众账号       |  is_subscribe   |   String   |
+|           货币种类           |    fee_type     |   String   |
+|       现金支付货币类型       |  cash_fee_type  |   String   |
+|     代金券或立减优惠金额     |   coupon_fee    |   String   |
+|   代金券或立减优惠使用数量   |  coupon_count   |   String   |
+|      代金券或立减优惠ID      |  coupon_id_$n   |   String   |
+| 单个代金券或立减优惠支付金额 |  coupon_fee_$n  |   String   |
+|          商家数据包          |     attach      |   String   |
+
+> 时序图
+
+<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\支付结果通知-时序图.png" style="zoom: 50%;" />

@@ -20,11 +20,6 @@ public class WebMvcConfig {
         return restTemplateBuilder.build();
     }
 
-    @Bean
-    public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate redisTemplate = new RedisTemplate();
-        redisTemplate.setConnectionFactory(factory);
-        return redisTemplate;
-    }
+
 
 }

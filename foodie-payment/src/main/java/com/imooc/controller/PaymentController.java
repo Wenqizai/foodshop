@@ -14,7 +14,7 @@ import com.imooc.resource.WXPayResource;
 import com.imooc.service.PaymentOrderService;
 import com.imooc.utils.CurrencyUtils;
 import com.imooc.utils.IMOOCJSONResult;
-import com.imooc.utils.RedisOperator;
+import com.imooc.RedisOperator;
 import com.imooc.wx.entity.PreOrderResult;
 import com.imooc.wx.service.WxOrderService;
 import org.apache.commons.lang3.StringUtils;

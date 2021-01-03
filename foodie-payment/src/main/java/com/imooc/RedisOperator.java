@@ -1,4 +1,4 @@
-package com.imooc.utils;
+package com.imooc;
 
 import java.util.Map;
 import java.util.Set;
