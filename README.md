@@ -2,7 +2,7 @@
 
 > 常见的用户注册登录流程
 
-<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\注册登录流程.png" style="zoom:50%;" />
+<img src="https://i.loli.net/2021/01/03/r39FTQyxzCcIWBY.png" style="zoom:50%;" />
 
 >  本项目采用方案
 
@@ -167,7 +167,7 @@ public class SubCategoryVO {
 
 1. 订单处理流程图
 
-![](C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\订单流程.png)
+![](https://i.loli.net/2021/01/03/VCozDLErUkYtWsi.png)
 
 2. 创建订单
    - 设置订单信息 ->  查询商品信息 -> 设置商品信息 -> 获取购物车中的商品数量 -> 计算商品价格和支付价格 -> 订单保存到数据库 -> 库存减除 -> 设置订单状态
@@ -185,7 +185,23 @@ update items_spec set stock = stock - #{pendingCounts} where id = #{specId} and 
 4. 分布式应用 : 分布式锁 zookeeper redis
 ```
 
-## 8. 微信支付
+3. 订单关闭
+
+   - 支付成功后的关闭
+   - 未支付超时的订单关闭(定时任务)
+
+   ==使用定时任务关闭超期未支付订单的弊端:== 
+
+   		1. 存在定时的时间差，不能准时关闭订单。（程序不严谨）
+     		2. 不支持集群。（不需要每个节点都执行定时任务）
+            		1. 解决方案：只使用一台计算机节点，单独用来运行所有的定时任务。
+     		3. 会对数据库全表搜索，极其影响数据库性能。
+
+   ==定时任务，仅仅适用于小型轻量级项目，传统项目==, 大型分布式项目可使用消息队列来处理。
+
+## 8. 支付 
+
+### 微信支付
 
 本项目因没有注册商户平台，故不具备使用微信支付的资质。因此使用第三方支付中心来完成支付流程。
 
@@ -193,17 +209,17 @@ update items_spec set stock = stock - #{pendingCounts} where id = #{specId} and 
 
 ![](C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\微信支付.png)
 
-### 8.1 创建商单
+#### 1 创建商单
 
-<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\创建订单-时序图.png" style="zoom:50%;" />
+<img src="https://i.loli.net/2021/01/03/gxaAdFWLIK5jtc1.png" style="zoom:50%;" />
 
-### 8.2 获取二维码
+#### 2 获取二维码
 
 > 统一下单(发送到微信支付中心)
 
 1. 时序图
 
-<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\获取二维码-时序图.png" style="zoom: 33%;" />
+<img src="https://i.loli.net/2021/01/03/rwVpchdBaGWNxuX.png" style="zoom: 33%;" />
 
 2. 请求url地址
 
@@ -242,11 +258,11 @@ https://api.mch.weixin.qq.com/pay/unifiedorder
 |    prepay_id    | 预支付交易会话标识 |
 |  ==code_url==   |     二维码链接     |
 
-### 8.3 扫码支付
+#### 3 扫码支付
 
 用户扫码确认支付，整个流程为微信客户端与微信支付中心的交互。
 
-### 8.4 支付结果通知
+#### 4 支付结果通知
 
 用户支付成功之后，微信支付中心会根据==notify_url==异步通知商家支付结果。
 
@@ -285,4 +301,22 @@ https://api.mch.weixin.qq.com/pay/unifiedorder
 
 > 时序图
 
-<img src="C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodie-dev-git\图片存放\支付结果通知-时序图.png" style="zoom: 50%;" />
+<img src="https://i.loli.net/2021/01/03/fQ4wLqOP8yS5lev.png" style="zoom: 50%;" />
+
+### 支付宝支付
+
+> 时序图
+
+<img src="https://i.loli.net/2021/01/03/WropT9Z7hvGLnE3.png" style="zoom: 80%;" />
+
+### 对比
+
+支付宝支付会比微信支付多了一次==同步returnUrl==，但此returnUrl不能作为支付成功的凭证。无论微信支付还是支付宝支付都是以==异步通知为准==。
+
+<img src="https://i.loli.net/2021/01/09/JYQNyz5tf7CIPZs.png" alt="image-20210109121058999" style="zoom:50%;" />
+
+## 9. 个人中心
+
+### 9. 1 用户信息修改
+
+借助validation做用户信息校验。

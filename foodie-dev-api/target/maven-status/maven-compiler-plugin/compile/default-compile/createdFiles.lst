@@ -1,4 +1,6 @@
+com\imooc\config\OrderJob.class
 com\imooc\controller\ShopcartController.class
+com\imooc\controller\center\CenterController.class
 com\imooc\controller\ItemsController.class
 com\imooc\controller\HelloController.class
 com\imooc\controller\OrderController.class
@@ -9,6 +11,7 @@ com\imooc\config\CorsConfig.class
 com\imooc\aspect\ServiceLogAspect.class
 com\imooc\controller\PassportController.class
 com\imooc\Application.class
+com\imooc\controller\center\CenterUserController.class
 com\imooc\controller\IndexController.class
 com\imooc\controller\AddressController.class
 com\imooc\controller\BaseController.class
