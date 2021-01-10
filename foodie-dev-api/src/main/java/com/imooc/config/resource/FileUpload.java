@@ -1,5 +1,7 @@
 package com.imooc.config.resource;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -14,16 +16,11 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:file-upload-dev.properties")
 @ConfigurationProperties(prefix = "file")
 @Component
+@Getter
+@Setter
 public class FileUpload {
 
-    @Value("imageUserFaceLocation")
     private String imageUserFaceLocation;
+    private String imageServerUrl;
 
-    public String getImageUserFaceLocation() {
-        return imageUserFaceLocation;
-    }
-
-    public void setImageUserFaceLocation(String imageUserFaceLocation) {
-        this.imageUserFaceLocation = imageUserFaceLocation;
-    }
 }

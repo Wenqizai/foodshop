@@ -8,6 +8,11 @@
   ],
   "properties": [
     {
+      "name": "file.image-server-url",
+      "type": "java.lang.String",
+      "sourceType": "com.imooc.config.resource.FileUpload"
+    },
+    {
       "name": "file.image-user-face-location",
       "type": "java.lang.String",
       "sourceType": "com.imooc.config.resource.FileUpload"

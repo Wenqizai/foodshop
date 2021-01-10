@@ -193,9 +193,9 @@ update items_spec set stock = stock - #{pendingCounts} where id = #{specId} and 
    ==使用定时任务关闭超期未支付订单的弊端:== 
 
    		1. 存在定时的时间差，不能准时关闭订单。（程序不严谨）
-     		2. 不支持集群。（不需要每个节点都执行定时任务）
-            		1. 解决方案：只使用一台计算机节点，单独用来运行所有的定时任务。
-     		3. 会对数据库全表搜索，极其影响数据库性能。
+   		2. 不支持集群。（不需要每个节点都执行定时任务）
+   	     		1. 解决方案：只使用一台计算机节点，单独用来运行所有的定时任务。
+   		3. 会对数据库全表搜索，极其影响数据库性能。
 
    ==定时任务，仅仅适用于小型轻量级项目，传统项目==, 大型分布式项目可使用消息队列来处理。
 
@@ -320,3 +320,46 @@ https://api.mch.weixin.qq.com/pay/unifiedorder
 ### 9. 1 用户信息修改
 
 借助validation做用户信息校验。
+
+### 9.2 头像上传
+
+> 静态资源访问
+
+1. `dev` : 本地静态资源映射。
+
+```java
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+    
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/META-INF/resources/")  // 映射swagger2
+                .addResourceLocations("file:C:\\@D\\-Development\\Study\\Codes\\java-idea\\Learning\\Project\\foodie-dev-git\\");     // 映射本地静态资源
+    }
+}
+```
+
+2. `prod` : 借助oss来存储静态资源。
+
+> 注意事项
+
+1. 后缀名校验（前后端均要），防止服务器被攻击。
+2. 上传文件大小限制。（捕获异常，并返回错误提示）
+
+```java
+@RestControllerAdvice
+public class CustomExceptionHandler {
+    
+    /**
+     * 上传文件超过500k, 捕获此异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public IMOOCJSONResult handlerMaxUploadFile(MaxUploadSizeExceededException e) {
+        return IMOOCJSONResult.errorMsg("文件上传大小不能超过500k, 请压缩图片或者降低图片质量后再上传!");
+    }
+}
+```
+
