@@ -36,4 +36,10 @@ public class BaseController {
      */
     public static final String paymentUrl = "http://payment.t.mukewang.com/foodie-payment/payment/createMerchantOrder";
 //    public static final String paymentUrl = "http://localhost:8089/payment/createMerchantOrder";
+
+    /**
+     * 头像上传路径(开发环境)
+     */
+    public static final String IMAGE_USER_FACE_LOCATION = "C:\\@D\\-Development\\Study\\Codes\\java-idea\\Learning" +
+            "\\Project\\foodie-dev-git\\faces";
 }

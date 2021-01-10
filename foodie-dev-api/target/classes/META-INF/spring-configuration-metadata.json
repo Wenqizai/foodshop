@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.imooc.config.resource.FileUpload",
+      "sourceType": "com.imooc.config.resource.FileUpload"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.image-user-face-location",
+      "type": "java.lang.String",
+      "sourceType": "com.imooc.config.resource.FileUpload"
+    }
+  ],
+  "hints": []
+}

@@ -9,6 +9,8 @@ com\imooc\config\Swagger2.class
 com\imooc\config\WebMvcConfig.class
 com\imooc\config\CorsConfig.class
 com\imooc\aspect\ServiceLogAspect.class
+META-INF\spring-configuration-metadata.json
+com\imooc\config\resource\FileUpload.class
 com\imooc\controller\PassportController.class
 com\imooc\Application.class
 com\imooc\controller\center\CenterUserController.class
