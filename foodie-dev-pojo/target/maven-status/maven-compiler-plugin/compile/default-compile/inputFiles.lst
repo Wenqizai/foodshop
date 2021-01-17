@@ -4,6 +4,7 @@ C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-po
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\bo\ShopcartBO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\ItemCommentVO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\ItemInfoVO.java
+C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\MyCommentVO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\OrderVO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\bo\center\OrderItemsCommentBO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\bo\AddressBO.java
@@ -27,6 +28,7 @@ C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-po
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\ItemsSpec.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\bo\UserBO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\bo\SubmitBO.java
+C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\OrderStatusCountsVO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\MySubOrderItemVO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\vo\SimpleItemVO.java
 C:\@D\-Development\Study\Codes\java-idea\Learning\Project\foodshop\foodie-dev-pojo\src\main\java\com\imooc\pojo\Category.java

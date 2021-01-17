@@ -9,6 +9,7 @@ import com.imooc.pojo.OrderItems;
 import com.imooc.pojo.OrderStatus;
 import com.imooc.pojo.Orders;
 import com.imooc.pojo.bo.center.OrderItemsCommentBO;
+import com.imooc.pojo.vo.MyCommentVO;
 import com.imooc.pojo.vo.MyOrdersVO;
 import com.imooc.service.center.MyCommentService;
 import com.imooc.service.center.MyOrdersService;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @date 2021/1/9
  */
 @Service
-public class MyCommentServiceImpl implements MyCommentService {
+public class MyCommentServiceImpl extends BaseService implements MyCommentService {
 
     @Autowired
     private OrderItemsMapper orderItemsMapper;
@@ -72,5 +73,15 @@ public class MyCommentServiceImpl implements MyCommentService {
         orderStatus.setOrderId(orderId);
         orderStatus.setCommentTime(new Date());
         orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult queryMyComments(String userId, Integer page, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        PageHelper.startPage(page, pageSize);
+        List<MyCommentVO> list = itemsCommentsMapperCustom.queryMyComments(map);
+        return setterPagedGrid(list, page);
     }
 }

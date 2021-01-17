@@ -500,4 +500,8 @@ public class MySubOrderItemVO {
 
 需验证用户是否与该订单关联。
 
+> 订单状态数
+
+> 订单动态
+
 > 商品评论
