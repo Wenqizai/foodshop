@@ -4,8 +4,11 @@ com\imooc\service\impl\UserServiceImpl.class
 com\imooc\service\AddressService.class
 com\imooc\service\CarouselService.class
 com\imooc\service\impl\CategroyServiceImpl.class
+com\imooc\service\impl\center\MyCommentServiceImpl.class
 com\imooc\service\impl\StuServiceImpl.class
+com\imooc\service\center\CenterUserService.class
 com\imooc\service\impl\AddressServiceImpl.class
+com\imooc\service\impl\center\CenterUserServiceImpl.class
 com\imooc\service\impl\CarouselServiceImpl.class
 com\imooc\service\impl\OrderServiceImpl.class
 com\imooc\service\OrderService.class

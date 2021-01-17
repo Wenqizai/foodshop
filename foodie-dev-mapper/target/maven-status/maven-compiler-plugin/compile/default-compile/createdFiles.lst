@@ -1,3 +1,4 @@
+com\imooc\mapper\OrderMapperCustom.class
 com\imooc\mapper\ItemsCommentsMapper.class
 com\imooc\mapper\ItemsMapperCustom.class
 com\imooc\mapper\ItemsParamMapper.class

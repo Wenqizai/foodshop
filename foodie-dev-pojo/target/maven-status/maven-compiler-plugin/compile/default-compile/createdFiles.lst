@@ -13,6 +13,8 @@ com\imooc\pojo\Users.class
 com\imooc\pojo\vo\SimpleItemVO.class
 com\imooc\pojo\vo\CommentLevelCountsVO.class
 com\imooc\pojo\bo\ShopcartBO.class
+com\imooc\pojo\vo\MyOrdersVO.class
+com\imooc\pojo\vo\MySubOrderItemVO.class
 com\imooc\pojo\Orders.class
 com\imooc\pojo\ItemsSpec.class
 com\imooc\pojo\vo\ItemCommentVO.class

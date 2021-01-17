@@ -1,10 +1,9 @@
 package com.imooc.controller.center;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.imooc.config.resource.FileUpload;
 import com.imooc.controller.BaseController;
 import com.imooc.pojo.Users;
-import com.imooc.pojo.bo.CenterUserBO;
+import com.imooc.pojo.bo.center.CenterUserBO;
 import com.imooc.service.center.CenterUserService;
 import com.imooc.utils.CookieUtils;
 import com.imooc.utils.DateUtil;

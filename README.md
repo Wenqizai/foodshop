@@ -363,3 +363,141 @@ public class CustomExceptionHandler {
 }
 ```
 
+### 9.3 订单管理
+
+> 列表展示
+
+==BUG: 注意使用PageHelper进行分页查询导致订单管理分页不正确问题。==
+
+由于订单管理中的订单查询为嵌套分页查询，所以前端展示时分页的数目按商品条数分页，不是按订单条数进行分页，所以导致商品展示的总条数不一致。(订单与商品条数是一对多的关系)
+
+[PageHelper官方文档指明不支持嵌套查询的结果映射](https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/Important.md)。
+
+<img src="https://i.loli.net/2021/01/16/32lXMko6dwEFxbI.png" alt="image-20210116143126237" style="zoom:50%;" />
+
+<img src="https://i.loli.net/2021/01/16/9zbnFxHAhyaTPeY.png" alt="image-20210116143213280" style="zoom:50%;" />
+
+`解决方法`
+
+1. 前端进行订单的分页查询，拿到订单id后，再进行商品条目的查询。
+2. 借助MyBatis的嵌套查询解决。
+
+```java
+@Data
+public class MyOrdersVO {
+
+    private String orderId;
+    private Date createdTime;
+    private Integer payMethod;
+    private Integer realPayAmount;
+    private Integer postAmount;
+    private Integer isComment;
+    private Integer orderStatus;
+
+    private List<MySubOrderItemVO> subOrderItemList;
+}
+```
+
+```java
+@Data
+public class MySubOrderItemVO {
+
+    private String itemId;
+    private String itemImg;
+    private String itemName;
+    private String itemSpecName;
+    private Integer buyCounts;
+    private Integer price;
+
+}
+```
+
+```xml
+<resultMap id="myOrdersVO" type="com.imooc.pojo.vo.MyOrdersVO">
+  <id column="orderId" property="orderId"/>
+  <result column="createdTime" property="createdTime"/>
+  <result column="payMethod" property="payMethod"/>
+  <result column="realPayAmount" property="realPayAmount"/>
+  <result column="postAmount" property="postAmount"/>
+  <result column="orderStatus" property="orderStatus"/>
+
+  <collection property="subOrderItemList" select="getSubItems" column="orderId" ofType="com.imooc.pojo.vo.MySubOrderItemVO">
+    <result column="itemId" property="itemId"/>
+    <result column="itemName" property="itemName"/>
+    <result column="itemImg" property="itemImg"/>
+    <result column="itemSpecName" property="itemSpecName"/>
+    <result column="buyCounts" property="buyCounts"/>
+    <result column="price" property="price"/>
+  </collection>
+</resultMap>
+
+<select id="queryMyOrders"  parameterType="Map" resultMap="myOrdersVO">
+  SELECT
+  od.id as orderId,
+  od.created_time as createdTime,
+  od.pay_method as payMethod,
+  od.real_pay_amount as realPayAmount,
+  od.post_amount as postAmount,
+  os.order_status as orderStatus
+  FROM
+  orders od
+  LEFT JOIN order_status os ON od.id = os.order_id
+  WHERE
+  user_id = #{paramsMap.userId}
+  AND od.is_delete = 0
+  <if test="paramsMap.orderStatus != null">
+    AND order_status = #{paramsMap.orderStatus}
+  </if>
+  ORDER BY
+  od.updated_time ASC
+</select>
+
+<select id="getSubItems" parameterType="String" resultType="com.imooc.pojo.vo.MySubOrderItemVO">
+  SELECT
+  oi.item_id as itemId,
+  oi.item_name as itemName,
+  oi.item_img as itemImg,
+  oi.item_spec_name as itemSpecName,
+  oi.buy_counts as buyCounts,
+  oi.price as price
+  FROM
+  order_items as oi
+  WHERE
+  oi.order_id = #{orderId}
+</select>
+
+<!-- 嵌套查询, 分页结果不正确 -->
+<select id="queryMyOrdersDoNotUse"  parameterType="Map" resultMap="myOrdersVO">
+  SELECT
+  od.id as orderId,
+  od.created_time as createdTime,
+  od.pay_method as payMethod,
+  od.real_pay_amount as realPayAmount,
+  od.post_amount as postAmount,
+  os.order_status as orderStatus,
+  oi.item_id as itemId,
+  oi.item_name as itemName,
+  oi.item_img as itemImg,
+  oi.item_spec_name as itemSpecName,
+  oi.buy_counts as buyCounts,
+  oi.price as price
+  FROM
+  orders od
+  LEFT JOIN order_status os ON od.id = os.order_id
+  LEFT JOIN order_items oi ON od.id = oi.order_id
+  WHERE
+  user_id = #{paramsMap.userId}
+  AND od.is_delete = 0
+  <if test="paramsMap.orderStatus != null">
+    AND order_status = #{paramsMap.orderStatus}
+  </if>
+  ORDER BY
+  od.updated_time ASC
+</select>
+```
+
+> 订单状态修改
+
+需验证用户是否与该订单关联。
+
+> 商品评论

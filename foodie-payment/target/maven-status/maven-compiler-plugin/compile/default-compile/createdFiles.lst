@@ -7,6 +7,7 @@ com\imooc\service\impl\UserServiceImpl.class
 com\imooc\wx\entity\PreOrderResult.class
 com\imooc\controller\interceptor\PayCenterInterceptor.class
 com\imooc\mapper\UsersMapper.class
+META-INF\spring-configuration-metadata.json
 com\imooc\wx\util\Sign.class
 com\imooc\service\PaymentOrderService.class
 com\imooc\PayApplication.class
@@ -24,6 +25,7 @@ com\imooc\pojo\Orders.class
 com\imooc\wx\service\impl\WxOrderServiceImpl.class
 com\imooc\controller\NotifyController.class
 com\imooc\my\mapper\MyMapper.class
+com\imooc\RedisOperator.class
 com\imooc\wx\entity\PayResult.class
 com\imooc\controller\PaymentController.class
 com\imooc\service\impl\PaymentOrderServiceImpl.class
