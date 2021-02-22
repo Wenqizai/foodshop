@@ -24,6 +24,9 @@ public class CorsConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         // 设置url来源
         corsConfiguration.addAllowedOrigin("http://localhost:8080");
+        corsConfiguration.addAllowedOrigin("http://192.168.8.116:8080");
+        corsConfiguration.addAllowedOrigin("http://192.168.8.116");
+        corsConfiguration.addAllowedOrigin("*");
         // 设置是否发送cookie信息
         corsConfiguration.setAllowCredentials(true);
         // 允许的请求方式

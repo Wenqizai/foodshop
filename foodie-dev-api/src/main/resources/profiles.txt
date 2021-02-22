@@ -1,0 +1,19 @@
+profiles多环境配置
+1. 数据源配置
+    1.1 url 根据自身情况去修改为localhost或者内网IP(集群或者分布式系统, 一定要使用内网IP)
+2. MyBatis 日志打印
+    dev/test 可以打印
+    prod 无需打印
+3. 图片保存目录和图片服务请求路径配置
+    /workspaces/images/foodie/faces
+    http://192.168.8.116:8088/foodie-dev-api/foodie/faces
+4. 从支付中心回调天天吃货后端服务的回调地址
+    http://majxch.natappfree.cc/orders/notifyMerChantOrderPaid
+
+打包方式
+1. jar
+    服务化的概念, 后续结束Spring Cloud, 所有的服务打包都是以jar的形式存在
+2. war
+    应用程序的概念, 也可以向外提供服务和接口
+
+处理多服务器跨域访问

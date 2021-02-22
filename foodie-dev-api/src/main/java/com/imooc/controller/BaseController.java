@@ -35,7 +35,7 @@ public class BaseController {
      * 微信支付成功 -> 支付中心 -> 天天吃货平台
      *                         -> 回调通知的URL
      */
-    public static final String payReturnUrl="http://dyd76y.natappfree.cc/orders/notifyMerChantOrderPaid";
+    public static final String payReturnUrl="http://wtz3w9.natappfree.cc/orders/notifyMerChantOrderPaid";
 
     /**
      * 支付中心的调用地址(生产环境)

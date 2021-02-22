@@ -1,18 +1,18 @@
 
-R	java:S125·"<This block of commented-out lines of code should be removed.(üİ‹ï
-T
-java:S1197³"8Move the array designator from the variable to the type.(ê›ë÷øÿÿÿÿ
+F
+java:S1066µ"/Merge this if statement with the enclosing one.(œÇªü
 l	java:S117¯"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÈŞæ‹üÿÿÿÿ
 K
 java:S1066·"/Merge this if statement with the enclosing one.(ãè­ãüÿÿÿÿ
-F
-java:S1066µ"/Merge this if statement with the enclosing one.(œÇªü
-P
-java:S1118":Add a private constructor to hide the implicit public one.(¥ß÷
-`
-java:S1124"EReorder the modifiers to comply with the Java Language Specification.(À·ìëıÿÿÿÿ
 f	java:S117¥"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹«ƒp
-H
-java:S2692‘"10 is a valid index, but is ignored by this check.(»€Æ
 K
 java:S1066¶"/Merge this if statement with the enclosing one.(óÍä•üÿÿÿÿ
+R	java:S125·"<This block of commented-out lines of code should be removed.(üİ‹ï
+T
+java:S1197³"8Move the array designator from the variable to the type.(ê›ë÷øÿÿÿÿ
+P
+java:S1118":Add a private constructor to hide the implicit public one.(¥ß÷
+H
+java:S2692‘"10 is a valid index, but is ignored by this check.(»€Æ
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(À·ìëıÿÿÿÿ

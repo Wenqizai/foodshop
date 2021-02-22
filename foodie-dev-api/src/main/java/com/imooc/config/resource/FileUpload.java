@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author liangwq
  * @date 2021/1/10
  */
-@PropertySource("classpath:file-upload-dev.properties")
+@PropertySource("classpath:file-upload-prod.properties")
 @ConfigurationProperties(prefix = "file")
 @Component
 @Getter
