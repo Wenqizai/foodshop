@@ -85,11 +85,11 @@ public class IndexController {
         if (rootCatId == null) {
             return IMOOCJSONResult.errorMsg("分类不存在");
         }
-        String subCats = redisOperator.get("subCat");
+        String subCats = redisOperator.get("subCat:" + rootCatId);
         List<CategoryVO> subCatList = new ArrayList<>();
         if (StringUtils.isBlank(subCats)) {
             subCatList = categoryService.getSubCatList(rootCatId);
-            redisOperator.set("subCat", JsonUtils.objectToJson(subCatList));
+            redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(subCatList));
         } else {
             subCatList = JsonUtils.jsonToList(subCats, CategoryVO.class);
         }
@@ -104,11 +104,12 @@ public class IndexController {
         if (rootCatId == null) {
             return IMOOCJSONResult.errorMsg("分类不存在");
         }
-        String sixNewItems = redisOperator.get("sixNewItems");
+        String key = "sixNewItems:" + rootCatId;
+        String sixNewItems = redisOperator.get(key);
         List<NewItemsVO> sixNewItemsList = new ArrayList<>();
         if (StringUtils.isBlank(sixNewItems)) {
             sixNewItemsList = categoryService.getSixNewItemsLazy(rootCatId);
-            redisOperator.set("sixNewItems", JsonUtils.objectToJson(sixNewItemsList));
+            redisOperator.set(key, JsonUtils.objectToJson(sixNewItemsList));
         } else {
             sixNewItemsList = JsonUtils.jsonToList(sixNewItems, NewItemsVO.class);
         }
