@@ -46,7 +46,11 @@ public class IndexController {
         List<Carousel> list = new ArrayList<>();
         if (StringUtils.isBlank(carousels)) {
             list = carouselService.queryAll(YesOrNo.YES.type);
-            redisOperator.set("carousel", JsonUtils.objectToJson(list));
+            if (list != null && list.size() > 0) {
+                redisOperator.set("carousel", JsonUtils.objectToJson(list));
+            } else {
+                redisOperator.set("carousel", JsonUtils.objectToJson(list), 5 * 60);
+            }
         } else {
             list = JsonUtils.jsonToList(carousels, Carousel.class);
         }
@@ -70,7 +74,11 @@ public class IndexController {
         List<Category> categoryList = new ArrayList<>();
         if (StringUtils.isBlank(category)) {
             categoryList = categoryService.queryAllRootLevelCat();
-            redisOperator.set("Category", JsonUtils.objectToJson(categoryList));
+            if (categoryList != null && categoryList.size() > 0) {
+                redisOperator.set("Category", JsonUtils.objectToJson(categoryList));
+            } else {
+                redisOperator.set("Category", JsonUtils.objectToJson(categoryList), 5 * 60);
+            }
         } else {
             categoryList = JsonUtils.jsonToList(category, Category.class);
         }
@@ -86,10 +94,21 @@ public class IndexController {
             return IMOOCJSONResult.errorMsg("分类不存在");
         }
         String subCats = redisOperator.get("subCat:" + rootCatId);
-        List<CategoryVO> subCatList = new ArrayList<>();
+        List<CategoryVO> subCatList;
         if (StringUtils.isBlank(subCats)) {
             subCatList = categoryService.getSubCatList(rootCatId);
-            redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(subCatList));
+            /**
+             * 查询的key在redis中不存在
+             * 对应的id在数据库也不存在
+             * 此时被非法用户进行攻击, 大量的请求会直接打在db上, 造成宕机, 从而影响整个系统
+             * 这种现象称之为缓存传统
+             * 解决方案: 把空的数据也缓存起来, 比如空字符串, 空对象, 空数组或list
+             */
+            if (subCatList != null && subCatList.size() > 0) {
+                redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(subCatList));
+            } else {
+                redisOperator.set("subCat:" + rootCatId, JsonUtils.objectToJson(subCatList), 5 * 60);
+            }
         } else {
             subCatList = JsonUtils.jsonToList(subCats, CategoryVO.class);
         }
@@ -109,7 +128,11 @@ public class IndexController {
         List<NewItemsVO> sixNewItemsList = new ArrayList<>();
         if (StringUtils.isBlank(sixNewItems)) {
             sixNewItemsList = categoryService.getSixNewItemsLazy(rootCatId);
-            redisOperator.set(key, JsonUtils.objectToJson(sixNewItemsList));
+            if (sixNewItemsList != null && sixNewItemsList.size() > 0) {
+                redisOperator.set(key, JsonUtils.objectToJson(sixNewItemsList));
+            } else {
+                redisOperator.set(key, JsonUtils.objectToJson(sixNewItemsList), 5 * 60);
+            }
         } else {
             sixNewItemsList = JsonUtils.jsonToList(sixNewItems, NewItemsVO.class);
         }
