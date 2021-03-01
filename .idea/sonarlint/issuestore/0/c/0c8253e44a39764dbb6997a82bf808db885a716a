@@ -1,17 +1,0 @@
-
-?
-java:S1444")Make this "public static lip" field final(à°ƒ
-P
-java:S1118":Add a private constructor to hide the implicit public one.(À¨¶³
-E
-java:S3740&"/Provide the parametrized type for this generic.(¤ŞÆ
-J
-java:S3740#"/Provide the parametrized type for this generic.(ÒÏÓŸùÿÿÿÿ
-e
-java:S1104"OMake lip a static final constant or non-public and provide accessors if needed.(à°ƒ
-,
-java:S1700"Rename field "ip"(Íİ¡˜ıÿÿÿÿ
-C
-java:S1444"(Make this "public static ip" field final(Íİ¡˜ıÿÿÿÿ
-i
-java:S1104"NMake ip a static final constant or non-public and provide accessors if needed.(Íİ¡˜ıÿÿÿÿ
