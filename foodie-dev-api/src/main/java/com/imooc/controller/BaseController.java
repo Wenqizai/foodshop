@@ -26,12 +26,16 @@ import java.util.UUID;
  */
 @Controller
 public class BaseController {
-
+    /**
+     * 购物车
+     */
     public static final String FOODIE_SHOPCART = "shopcart";
 
     public static final Integer COMMENT_PAGE_SIZE = 10;
     public static final Integer PAGE_SIZE = 20;
-
+    /**
+     * 用户token
+     */
     public static final String REDIS_USER_TOKEN = "redis_user_token";
 
     @Autowired
