@@ -1,11 +1,15 @@
 package com.imooc.controller;
 
 import com.imooc.pojo.Orders;
+import com.imooc.pojo.Users;
+import com.imooc.pojo.vo.UserVO;
 import com.imooc.service.StuService;
 import com.imooc.service.center.MyOrdersService;
 import com.imooc.utils.IMOOCJSONResult;
+import com.imooc.utils.RedisOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 /**
  * @author liangwq
@@ -27,8 +32,12 @@ public class BaseController {
     public static final Integer COMMENT_PAGE_SIZE = 10;
     public static final Integer PAGE_SIZE = 20;
 
+    public static final String REDIS_USER_TOKEN = "redis_user_token";
+
     @Autowired
     private MyOrdersService myOrdersService;
+    @Autowired
+    private RedisOperator redisOperator;
 
 
     /**
@@ -63,5 +72,20 @@ public class BaseController {
             return IMOOCJSONResult.errorMsg("订单不存在");
         }
         return IMOOCJSONResult.ok(orders);
+    }
+
+    /**
+     * 实现用户的Redis会话
+     * @param userResult
+     * @return
+     */
+    public UserVO conventUserVO(Users userResult) {
+        String uniqueToken = UUID.randomUUID().toString().trim();
+        redisOperator.set(REDIS_USER_TOKEN + ":" + userResult.getId(), uniqueToken);
+
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(userResult, userVO);
+        userVO.setUserUniqueToken(uniqueToken);
+        return userVO;
     }
 }

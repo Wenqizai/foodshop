@@ -4,6 +4,7 @@ import com.imooc.config.resource.FileUpload;
 import com.imooc.controller.BaseController;
 import com.imooc.pojo.Users;
 import com.imooc.pojo.bo.center.CenterUserBO;
+import com.imooc.pojo.vo.UserVO;
 import com.imooc.service.center.CenterUserService;
 import com.imooc.utils.CookieUtils;
 import com.imooc.utils.DateUtil;
@@ -60,10 +61,14 @@ public class CenterUserController extends BaseController {
         }
 
         Users userResult = centerUserService.updateUserInfo(userId, centerUserBO);
-        userResult = setNullProperty(userResult);
+//        userResult = setNullProperty(userResult);
         CookieUtils.setCookie(request, response, "user",
                 JsonUtils.objectToJson(userResult), true);
-        // TODO 后续要改, 增加令牌token, 会整合到Redis中, 分布式会话
+        // 后续要改, 增加令牌token, 会整合到Redis中, 分布式会话
+        UserVO userVO = conventUserVO(userResult);
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(userVO), true);
+
         return IMOOCJSONResult.ok(userResult);
     }
 
@@ -143,10 +148,12 @@ public class CenterUserController extends BaseController {
         // 由于浏览器可能存在缓存, 所以在这里, 我们需要加上时间戳来保证更新后的图片可以即使刷新
         String finalUserFaceUrl = imageServerUrl + uploadPathPrefix + "?t=" + DateUtil.getCurrentDateString(DateUtil.DATE_PATTERN);
         Users userResult = centerUserService.updateUserFace(userId, finalUserFaceUrl);
-        userResult = setNullProperty(userResult);
+        // 增加令牌token, 会整合到Redis中, 分布式会话
+//        userResult = setNullProperty(userResult);
+        // 后续要改, 增加令牌token, 会整合到Redis中, 分布式会话
+        UserVO userVO = conventUserVO(userResult);
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(userResult), true);
-        // TODO 后续要改, 增加令牌token, 会整合到Redis中, 分布式会话
+                JsonUtils.objectToJson(userVO), true);
 
         return IMOOCJSONResult.ok();
     }
