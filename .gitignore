@@ -1,8 +1,9 @@
-.idea
+.idea/*
 README.assets
 Notes
 /.settings/
 /.project
 *.iml
-/.idea/
+/.idea
 target/
+README-cluster.assets

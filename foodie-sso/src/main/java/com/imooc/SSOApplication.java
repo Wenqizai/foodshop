@@ -4,23 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author liangwq
- * @date 2020/11/29
+ * @date 2021/3/4
  */
-//@EnableTransactionManagement
-@EnableScheduling
 @ComponentScan({"com.imooc", "org.n3r.idworker"})
 @MapperScan(basePackages = {"com.imooc.mapper"})
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-@EnableRedisHttpSession // 开启使用Redis作为Spring session
-public class Application {
-
+public class SSOApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SSOApplication.class, args);
     }
 }

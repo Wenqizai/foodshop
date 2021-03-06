@@ -29,6 +29,8 @@ public class CorsConfig {
         corsConfiguration.addAllowedOrigin("http://shop.z.mukewang.com");
         corsConfiguration.addAllowedOrigin("http://center.z.mukewang.com");
         corsConfiguration.addAllowedOrigin("http://192.168.8.116");
+        corsConfiguration.addAllowedOrigin("http://www.sso.com:8080");
+        corsConfiguration.addAllowedOrigin("http://www.mtv.com:8080");
         corsConfiguration.addAllowedOrigin("*");
         // 设置是否发送cookie信息
         corsConfiguration.setAllowCredentials(true);
