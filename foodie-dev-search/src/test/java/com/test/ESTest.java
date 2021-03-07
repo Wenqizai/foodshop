@@ -1,7 +1,7 @@
 package com.test;
 
 import com.imooc.SearchApplication;
-import com.imooc.es.pojo.Stu;
+import com.test.pojo.Stu;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilders;

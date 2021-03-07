@@ -1,4 +1,4 @@
-package com.imooc.es.pojo;
+package com.test.pojo;
 
 import lombok.Data;
 import lombok.ToString;

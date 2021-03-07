@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @author liangwq
  * @date 2020/11/29
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class SearchApplication {
 
     public static void main(String[] args) {
