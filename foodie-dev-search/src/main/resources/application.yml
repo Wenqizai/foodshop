@@ -1,0 +1,21 @@
+server:
+  port: 8099
+
+spring:
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.8.116:9300
+      cluster-name: es6
+
+  datasource: # 数据源的相关配置
+    type: com.zaxxer.hikari.HikariDataSource          # 数据源类型：HikariCP
+    driver-class-name: com.mysql.jdbc.Driver         # mysql驱动
+    url: jdbc:mysql://192.168.8.116:3306/foodie-shop-dev?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+
+  redis:
+    # Redis 单实例
+    host: 192.168.8.116
+    port: 6379
+    password: redis
