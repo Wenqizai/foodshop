@@ -99,9 +99,9 @@ public class CenterUserController extends BaseController {
                     // 获取文件后缀名
                     String suffix = fileNameArray[fileNameArray.length - 1];
 
-                    if (!"png".equalsIgnoreCase(suffix) ||
-                            !"gif".equalsIgnoreCase(suffix) ||
-                            !"jpg".equalsIgnoreCase(suffix) ||
+                    if (!"png".equalsIgnoreCase(suffix) &&
+                            !"gif".equalsIgnoreCase(suffix) &&
+                            !"jpg".equalsIgnoreCase(suffix) &&
                             !"jpeg".equalsIgnoreCase(suffix)) {
                         return IMOOCJSONResult.errorMsg("图片格式不正确");
                     }

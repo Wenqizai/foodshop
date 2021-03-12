@@ -9,6 +9,9 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,8 +41,16 @@ public class ItemServiceImpl implements ItemESService {
 //        String preTag = "<font color='red'>";
 //        String postTag = "</font>";
         Pageable pageable = PageRequest.of(page, pageSize);
-//        SortBuilder moneySortBuilder = new FieldSortBuilder("money").order(SortOrder.DESC);
-//        SortBuilder ageSortBuilder = new FieldSortBuilder("age").order(SortOrder.DESC);
+        // TODO 策略模式
+        SortBuilder sortBuilder = null;
+        if (sort.equals("c")) {
+            sortBuilder = new FieldSortBuilder("sellCounts").order(SortOrder.DESC);
+        } else if (sort.equals("p")){
+            sortBuilder = new FieldSortBuilder("price").order(SortOrder.DESC);
+        } else {
+            sortBuilder = new FieldSortBuilder("itemName.keyword").order(SortOrder.DESC);
+        }
+
         String itemNameFiled = "itemName";
         SearchQuery query = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.matchQuery(itemNameFiled, keywords))
@@ -48,7 +59,7 @@ public class ItemServiceImpl implements ItemESService {
 //                        .preTags(preTag)
 //                        .postTags(postTag)
                         )
-//                .withSort(moneySortBuilder)
+                .withSort(sortBuilder)
 //                .withSort(ageSortBuilder)
                 .withPageable(pageable)
                 .build();
