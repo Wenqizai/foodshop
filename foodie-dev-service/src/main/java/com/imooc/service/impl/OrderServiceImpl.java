@@ -81,6 +81,10 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setIsDelete(YesOrNo.NO.type);
         newOrder.setCreatedTime(new Date());
         newOrder.setUpdatedTime(new Date());
+        // 先插入订单, 避免mycat分库后找不到父表
+        newOrder.setTotalAmount(0);
+        newOrder.setRealPayAmount(0);
+        ordersMapper.insert(newOrder);
 
         // 2. 循环根据itemSpecIds保存订单商品信息表
         String[] itemSpecIdArr = itemSpecIds.split(",");
@@ -125,7 +129,10 @@ public class OrderServiceImpl implements OrderService {
 
         newOrder.setTotalAmount(totalAmount);
         newOrder.setRealPayAmount(realPayAmount);
-        ordersMapper.insert(newOrder);
+        // Sharding column can't be updated ORDERS->USER_ID
+        newOrder.setUserId(null);
+        // 更新金额信息
+        ordersMapper.updateByPrimaryKeySelective(newOrder);
 
         // 3. 保存订单状态表
         OrderStatus waitPayOrderStatus = new OrderStatus();
