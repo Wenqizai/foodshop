@@ -15,5 +15,6 @@ public class SubmitBO {
     private String addressId;
     private Integer payMethod;
     private String leftMsg;
+    private String token;
 
 }

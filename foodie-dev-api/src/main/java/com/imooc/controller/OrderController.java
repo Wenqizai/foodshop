@@ -15,6 +15,8 @@ import com.imooc.utils.RedisOperator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +27,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author liangwq
@@ -42,11 +47,40 @@ public class OrderController extends BaseController {
     private RestTemplate restTemplate;
     @Autowired
     private RedisOperator redisOperator;
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @ApiOperation(value = "获取订单token", notes = "获取订单token", httpMethod = "POST")
+    @PostMapping("/getOrderToken")
+    public IMOOCJSONResult getOrderToken(HttpServletRequest request) {
+        String token = UUID.randomUUID().toString();
+        redisOperator.set("ORDER_TOKEN:" + request.getSession().getId(), token, 10 * 60);
+        return IMOOCJSONResult.ok(token);
+    }
 
     @ApiOperation(value = "用户下单", notes = "用户下单", httpMethod = "POST")
     @PostMapping("/create")
     public IMOOCJSONResult create(@RequestBody SubmitBO submitBO, HttpServletRequest request,
                                   HttpServletResponse response) {
+        // 幂等检验
+        String orderTokenKey = "ORDER_TOKEN:" + request.getSession().getId();
+        String lockKey = "LOCK_KEY:" + request.getSession().getId();
+        RLock lock = redissonClient.getLock(lockKey);
+        lock.lock();
+        try {
+            String orderToken = redisOperator.get(orderTokenKey);
+            if (StringUtils.isBlank(orderToken)) {
+                throw new RuntimeException("orderToken不存在");
+            }
+            if (!orderToken.equals(submitBO.getToken())) {
+                throw new RuntimeException("orderToken不正确");
+            }
+            // token检验正确, 需将token删除
+            redisOperator.del(orderTokenKey);
+        } finally {
+            lock.unlock();
+        }
+
         if (!submitBO.getPayMethod().equals(PayMethod.WEIXIN.type)
                 && !submitBO.getPayMethod().equals(PayMethod.ALIPAY.type)) {
             return IMOOCJSONResult.errorMsg("支付方式不支持");
